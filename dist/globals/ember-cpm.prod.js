@@ -546,6 +546,27 @@ var EmberString = Ember.String;
 
 var a_slice = Array.prototype.slice;
 
+/**
+  Generates a string interpolating the given values.
+
+  Example
+
+  ```javascript
+  var teacher = Ember.Object.extend({
+    name: 'Miguel',
+    course: 'Javacript',
+    catchPhrase: fmt('name', 'course', 'Hi, my name is %@ and I will teach you %@')
+  }).create();
+
+
+  teacher.get('catchPhrase'); // 'Hi, my name is Miguel and I will teach you Javascript'
+  ```
+
+  @method macros.fmt
+  @param *arguments The last element is the string to format. The rest of the arguments are the dependent key with the values to interpolate.
+                    The string interpolations follows the same rules in `Ember.String.fmt`
+  @return The formatted string.
+*/
 exports["default"] = function EmberCPM_fmt() {
   var formatString = '' + a_slice.call(arguments, -1),
       properties   = a_slice.call(arguments, 0, -1),
@@ -575,6 +596,23 @@ var get = Ember.get;
 var computed = Ember.computed;
 var EmberHandlebars = Ember.Handlebars;
 
+/**
+  Returns an Handlebars.SafeString with escaped text.
+
+  Example
+
+  ```javascript
+  var obj = Ember.Object.extend({
+    escaped: htmlEscape('value')
+  }).create({value: '<em>Hi</em>'});
+
+  obj.get('escaped'); // '&lt;em&gt;Hi&lt;/em&gt;'
+  ```
+
+  @method macros.htmlScape
+  @param {String} Dependent key with the string to scape.
+  @return {Ember.Handlebars.SafeString} The escaped string.
+*/
 exports["default"] = function EmberCPM_htmlEscape(dependentKey) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
@@ -595,6 +633,24 @@ var Ember = window.Ember["default"] || window.Ember;
 var get = Ember.get;
 var computed = Ember.computed;
 
+/**
+  Returns the value in the given dependent key, or if is null, the provided default value.
+
+  Example
+
+  ```javascript
+  var obj = Ember.Object.extend({
+    username: ifNull('name', 'Anonymous')
+  }).create();
+
+  obj.get('username'); // 'Anonymous'
+  ```
+
+  @method macros.ifNull
+  @param {String} dependentKey Name of the key with the possible null value.
+  @param          defaultValue Value that the CP will return if the dependent key is null.
+  @return
+*/
 exports["default"] = function EmberCPM_ifNull(dependentKey, defaultValue) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
@@ -610,9 +666,28 @@ var get = Ember.get;
 var computed = Ember.computed;
 var a_slice = Array.prototype.slice;
 
+/**
+  Joins the strings in the given property keys.
+
+  Example
+
+  ```javascript
+  var picard = Ember.Object.extend({
+    firstName: 'Jean-Luc',
+    lastName:  'Picard',
+    fullName:  join('firstName', 'lastName', ' ')
+  }).create();
+
+  picard.get('fullName'); // 'Jean-Luc Picard'
+  ```
+
+  @method macros.join
+  @param *arguments The last argument is the separator string. The rest are the dependent keys with the strings to join.
+  @return {String}  The joined string.
+*/
 exports["default"] = function EmberCPM_join() {
-  var separator  = a_slice.call(arguments, -1),
-      properties = a_slice.call(arguments, 0, -1);
+  var separator  = a_slice.call(arguments, -1);
+  var properties = a_slice.call(arguments, 0, -1);
 
   var cp = computed(function(){
     var that = this;
