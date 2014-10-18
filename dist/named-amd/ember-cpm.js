@@ -526,6 +526,27 @@ define("ember-cpm/macros/first-present",
       return ! isBlank(value);
     };
 
+    /**
+      Returns the first argument that is not blank (as in Ember.isBlank)
+
+      Example
+
+      ```javascript
+      var obj = Ember.Object.extend({
+        nickname: '',
+        name: 'Jean-Luc',
+        email: 'jean@starship-enterprise.space',
+        displayName: firstPresent('nickname', 'name', 'email')
+      }).create();
+
+
+      item.get('displayName'); // 'Jean-Luc'
+      ```
+
+      @method macros.firstPresent
+      @param *arguments
+      @return The first arguments that is not blank.
+    */
     __exports__["default"] = function EmberCPM_firstPresent() {
       var properties = a_slice.call(arguments);
       var computedArgs = a_slice.call(properties);
