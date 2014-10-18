@@ -77,11 +77,36 @@ exports["default"] = {
 };
 },{"./macros/all-equal":2,"./macros/among":3,"./macros/asFloat":4,"./macros/asInt":5,"./macros/concat":6,"./macros/conditional":7,"./macros/difference":8,"./macros/encode-uri":10,"./macros/encode-uri-component":9,"./macros/first-present":11,"./macros/fmt":12,"./macros/html-escape":13,"./macros/if-null":14,"./macros/join":15,"./macros/not-among":16,"./macros/not-equal":17,"./macros/not-match":18,"./macros/product":19,"./macros/promise":20,"./macros/quotient":21,"./macros/safe-string":22,"./macros/sum":24,"./macros/sum-by":23}],2:[function(_dereq_,module,exports){
 "use strict";
-
 var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
 var getDependentPropertyKeys = _dereq_("../utils").getDependentPropertyKeys;
 
+/**
+  Returns true if all the all its dependent values are equal between them.
+
+  Example
+
+  ```javascript
+  var Cuboid = Ember.Object.extend({
+    cube: allEqual('height', 'width', 'depth')
+  });
+
+  var shape = Cuboid.create({
+    height: 6,
+    width: 6,
+    depth: 6
+  });
+
+  shape.get('cube'); // true
+  shape.set('width', 4);
+  shape.get('cube'); // false
+  ```
+
+  @method macros.allEqual
+  @param *arguments Values or dependent keys that must be equal. It can be a values or the key of a
+                    property in the object of the computed property.
+  @return {Boolean} Returns true it all elements are equal
+*/
 exports["default"] = function EmberCPM_allEqual() {
   var mainArguments = Array.prototype.slice.call(arguments); // all arguments
   var propertyArguments = getDependentPropertyKeys(mainArguments);
