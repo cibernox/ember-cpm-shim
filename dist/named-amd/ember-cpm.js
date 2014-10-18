@@ -816,6 +816,14 @@ define("ember-cpm/macros/not-among",
     var get = Ember.get;
     var computed = Ember.computed;
 
+    /**
+      Opposite or `EmberCPM.macros.among`
+
+      @method macros.notAmong
+      @param {String} dependentKey Dependent key which value must not be among the given values.
+      @param          *values      Values among which the dependentKey must not be included.
+      @return {Boolean} Returns false the value in the given dependent key is among the privided values.
+    */
     __exports__["default"] = function EmberCPM_notAmong(dependentKey) {
       var properties = Array.prototype.slice.call(arguments, 1);
 
@@ -841,6 +849,14 @@ define("ember-cpm/macros/not-equal",
     var get = Ember.get;
     var computed = Ember.computed;
 
+    /**
+      Opposite or `Ember.computed.equal`
+
+      @method macros.notEqual
+      @param {String} dependentKey Dependent key which value must not be equal to the given value.
+      @param {String} targetValue  Value to compare against.
+      @return {Boolean} Returns true if the value in dependentKey is different to the targetValue
+    */
     __exports__["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
       return computed(dependentKey, function(){
         return get(this, dependentKey) !== targetValue;
@@ -856,6 +872,14 @@ define("ember-cpm/macros/not-match",
     var get = Ember.get;
     var computed = Ember.computed;
 
+    /**
+      Opposite or `Ember.computed.match`
+
+      @method macros.notMatch
+      @param {String} dependentKey Dependent key which value must not be match to the given regexp.
+      @param {String} regexp       Regular expression to compare with.
+      @return {Boolean} Returns true if the value in dependentKey does not match the given regexp.
+    */
     __exports__["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
       return computed(dependentKey, function(){
         var value = get(this, dependentKey);
