@@ -21,7 +21,7 @@ define(
       ```
 
       @method macros.asFloat
-      @param {String} dependentKey Depedent key which value will be casted to a float.
+      @param {String} dependentKey Dependent key which value will be casted to a float.
       @return {Number} Returns casted float.
     */
     __exports__["default"] = parseComputedPropertyMacro (parseFloat);

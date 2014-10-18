@@ -204,7 +204,7 @@ define("ember-cpm/macros/asFloat",
       ```
 
       @method macros.asFloat
-      @param {String} dependentKey Depedent key which value will be casted to a float.
+      @param {String} dependentKey Dependent key which value will be casted to a float.
       @return {Number} Returns casted float.
     */
     __exports__["default"] = parseComputedPropertyMacro (parseFloat);
@@ -234,7 +234,7 @@ define("ember-cpm/macros/asInt",
       ```
 
       @method macros.asInt
-      @param {String} dependentKey Depedent key which value will be casted to a integer.
+      @param {String} dependentKey Dependent key which value will be casted to a integer.
       @return {Number} Returns casted integer.
     */
     __exports__["default"] = parseComputedPropertyMacro(function (raw) {
@@ -251,8 +251,8 @@ define("ember-cpm/macros/concat",
     var guidFor = Ember.guidFor;
     var arrayComputed = Ember.arrayComputed;
 
-    var a_forEach = Ember.ArrayPolyfills.forEach,
-      a_slice   = Array.prototype.slice;
+    var a_forEach = Ember.ArrayPolyfills.forEach;
+    var a_slice   = Array.prototype.slice;
 
     /*
        Returns the index where an item is to be removed from, or placed into, for
@@ -268,10 +268,9 @@ define("ember-cpm/macros/concat",
         recomputeGuidIndexes(instanceMeta, changeMeta.property._dependentKeys, this);
       }
 
-      var dependentArrayLengths = instanceMeta.dependentArrayLengths,
-          dependentArrayIndex = instanceMeta.dependentGuidToIndex[dependentArrayGuid],
-          offset = 0,
-          arrayIndex;
+      var dependentArrayLengths = instanceMeta.dependentArrayLengths;
+      var dependentArrayIndex = instanceMeta.dependentGuidToIndex[dependentArrayGuid];
+      var offset = 0, arrayIndex;
 
       // offset is the sum of the lengths of arrays to our left
       for (var i = 0; i < dependentArrayIndex; ++i) {
@@ -315,6 +314,10 @@ define("ember-cpm/macros/concat",
       obj.get('itemsB').pushObjects(['e', 'f']);
       obj.get('allItems') //=> ['a', 'b', 'c', 'e', 'f', 'd']
       ```
+
+      @method macros.concat
+      @param *arguments Dependent keys with the arrays to concat.
+      @return {Array}
     */
     __exports__["default"] = function EmberCPM_concat() {
       var args = a_slice.call(arguments);
@@ -350,25 +353,25 @@ define("ember-cpm/macros/conditional",
   function(__dependency1__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
-    /**
-     * Conditional computed property
-     *
-     * Usage:
-     *
-     *      // A simple true/false check on a property
-     *      var MyType = Ember.Object.extend({
-     *          a: true,
-     *          b: EmberCPM.Macros.ifThenElse('a', 'yes', 'no')
-     *      });
-     *
-     *      // Composable computed properties
-     *      var lt = Ember.computed.lt; // "less than"
-     *      var MyType = Ember.Object.extend({
-     *          a: 15,
-     *          b: EmberCPM.Macros.conditional(lt('a', 57), 'yes', 'no')
-     *      });
-     */
 
+    /**
+       Conditional computed property
+
+       Example:
+       ```js
+        var Person = Ember.Object.extend({
+          canDrink: EmberCPM.Macros.conditional(Ember.computed.gte('age', 21), 'yes', 'no')
+        });
+        var boy = Person.create({age: 15});
+
+        boy.get('canDrink') // 'no'
+      ```
+      @method macros.conditions
+      @param {String|ComputedProperty} Dependent key or CP with truthy/falsy value.
+      @param                           valIfTrue Value if the first params is truthy
+      @param                           valIfTrue Value if the first params is falsy
+      @return the second or third parameter.
+     */
     __exports__["default"] = function EmberCPM_conditional(condition, valIfTrue, valIfFalse) {
       var isConditionComputed = Ember.Descriptor === condition.constructor;
       var propertyArguments = isConditionComputed ? condition._dependentKeys.slice(0) : [condition];

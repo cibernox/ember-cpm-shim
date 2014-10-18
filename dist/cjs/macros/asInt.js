@@ -20,7 +20,7 @@ var parseComputedPropertyMacro = require("../utils").parseComputedPropertyMacro;
   ```
 
   @method macros.asInt
-  @param {String} dependentKey Depedent key which value will be casted to a integer.
+  @param {String} dependentKey Dependent key which value will be casted to a integer.
   @return {Number} Returns casted integer.
 */
 exports["default"] = parseComputedPropertyMacro(function (raw) {
