@@ -199,7 +199,7 @@ var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
   ```
 
   @method macros.asFloat
-  @param value The value to cast. It can be a number, a numeric string, a property key or another computed property.
+  @param value The value to cast. It can be a number, a numeric string or a property key.
   @return {Number} Returns casted float.
 */
 exports["default"] = parseComputedPropertyMacro(parseFloat);
@@ -226,7 +226,7 @@ var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
   ```
 
   @method macros.asInt
-  @param {String} dependentKey Dependent key which value will be casted to a integer.
+  @param value The value to cast. It can be a numbed, a numeric string or a property key.
   @return {Number} Returns casted integer.
 */
 exports["default"] = parseComputedPropertyMacro(function (raw) {
@@ -906,7 +906,7 @@ exports.getVal = getVal;
  * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
  */
 function parseComputedPropertyMacro (parseFunction) {
-  return function parseMacro (dependantKey) {
+  return function parseMacro(dependantKey) {
     var args = [];
     if (dependantKey) {
       args.push(dependantKey);

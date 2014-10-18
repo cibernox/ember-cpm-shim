@@ -210,7 +210,7 @@ define("ember-cpm/macros/as-float",
       ```
 
       @method macros.asFloat
-      @param value The value to cast. It can be a number, a numeric string, a property key or another computed property.
+      @param value The value to cast. It can be a number, a numeric string or a property key.
       @return {Number} Returns casted float.
     */
     __exports__["default"] = parseComputedPropertyMacro(parseFloat);
@@ -240,7 +240,7 @@ define("ember-cpm/macros/as-int",
       ```
 
       @method macros.asInt
-      @param {String} dependentKey Dependent key which value will be casted to a integer.
+      @param value The value to cast. It can be a numbed, a numeric string or a property key.
       @return {Number} Returns casted integer.
     */
     __exports__["default"] = parseComputedPropertyMacro(function (raw) {
@@ -1025,7 +1025,7 @@ define("ember-cpm/utils",
      * parseComputedPropertyMacro(function (raw) {return parseFloat(raw);});
      */
     function parseComputedPropertyMacro (parseFunction) {
-      return function parseMacro (dependantKey) {
+      return function parseMacro(dependantKey) {
         var args = [];
         if (dependantKey) {
           args.push(dependantKey);

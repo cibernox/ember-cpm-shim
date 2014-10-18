@@ -21,7 +21,7 @@ var parseComputedPropertyMacro = require("../utils").parseComputedPropertyMacro;
   ```
 
   @method macros.asFloat
-  @param value The value to cast. It can be a number, a numeric string, a property key or another computed property.
+  @param value The value to cast. It can be a number, a numeric string or a property key.
   @return {Number} Returns casted float.
 */
 exports["default"] = parseComputedPropertyMacro(parseFloat);

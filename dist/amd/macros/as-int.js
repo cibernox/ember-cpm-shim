@@ -23,7 +23,7 @@ define(
       ```
 
       @method macros.asInt
-      @param {String} dependentKey Dependent key which value will be casted to a integer.
+      @param value The value to cast. It can be a numbed, a numeric string or a property key.
       @return {Number} Returns casted integer.
     */
     __exports__["default"] = parseComputedPropertyMacro(function (raw) {
