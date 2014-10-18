@@ -22,8 +22,8 @@ var conditional = _dereq_("./macros/conditional")["default"] || _dereq_("./macro
 var product = _dereq_("./macros/product")["default"] || _dereq_("./macros/product");
 var quotient = _dereq_("./macros/quotient")["default"] || _dereq_("./macros/quotient");
 var difference = _dereq_("./macros/difference")["default"] || _dereq_("./macros/difference");
-var asFloat = _dereq_("./macros/asFloat")["default"] || _dereq_("./macros/asFloat");
-var asInt = _dereq_("./macros/asInt")["default"] || _dereq_("./macros/asInt");
+var asFloat = _dereq_("./macros/as-float")["default"] || _dereq_("./macros/as-float");
+var asInt = _dereq_("./macros/as-int")["default"] || _dereq_("./macros/as-int");
 
 function reverseMerge(dest, source) {
   for (var key in source) {
@@ -75,7 +75,7 @@ exports["default"] = {
   Macros: Macros,
   install: install
 };
-},{"./macros/all-equal":2,"./macros/among":3,"./macros/asFloat":4,"./macros/asInt":5,"./macros/concat":6,"./macros/conditional":7,"./macros/difference":8,"./macros/encode-uri":10,"./macros/encode-uri-component":9,"./macros/first-present":11,"./macros/fmt":12,"./macros/html-escape":13,"./macros/if-null":14,"./macros/join":15,"./macros/not-among":16,"./macros/not-equal":17,"./macros/not-match":18,"./macros/product":19,"./macros/promise":20,"./macros/quotient":21,"./macros/safe-string":22,"./macros/sum":24,"./macros/sum-by":23}],2:[function(_dereq_,module,exports){
+},{"./macros/all-equal":2,"./macros/among":3,"./macros/as-float":4,"./macros/as-int":5,"./macros/concat":6,"./macros/conditional":7,"./macros/difference":8,"./macros/encode-uri":10,"./macros/encode-uri-component":9,"./macros/first-present":11,"./macros/fmt":12,"./macros/html-escape":13,"./macros/if-null":14,"./macros/join":15,"./macros/not-among":16,"./macros/not-equal":17,"./macros/not-match":18,"./macros/product":19,"./macros/promise":20,"./macros/quotient":21,"./macros/safe-string":22,"./macros/sum":24,"./macros/sum-by":23}],2:[function(_dereq_,module,exports){
 "use strict";
 var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
@@ -88,7 +88,9 @@ var getDependentPropertyKeys = _dereq_("../utils").getDependentPropertyKeys;
 
   ```javascript
   var Cuboid = Ember.Object.extend({
-    cube: allEqual('height', 'width', 'depth')
+    cube: allEqual('height', 'width', 'depth'),
+    base6: allEqual('width', 'depth', 6),
+    side12: allEqual(sum('width', 'depth'), 12),
   });
 
   var shape = Cuboid.create({
@@ -97,14 +99,15 @@ var getDependentPropertyKeys = _dereq_("../utils").getDependentPropertyKeys;
     depth: 6
   });
 
-  shape.get('cube'); // true
+  shape.get('cube');    // true
+  shape.get('base6');   // true
+  shape.get('side12');  // true
   shape.set('width', 4);
-  shape.get('cube'); // false
+  shape.get('cube');    // false
   ```
 
   @method macros.allEqual
-  @param *arguments Values or dependent keys that must be equal. It can be a values or the key of a
-                    property in the object of the computed property.
+  @param *arguments Elements that must be equal. It be regular value, a property key or another computed property.
   @return {Boolean} Returns true it all elements are equal
 */
 exports["default"] = function EmberCPM_allEqual() {
@@ -185,18 +188,21 @@ var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
 
   ```javascript
   var item = Ember.Object.extend({
-    stringPrice: '123.45',
-    price: asFloat('stringPrice')
+    castedString: asFloat('33.33'),
+    castedInt: asFloat('1'),
+    castedCP: asFloat(sum('castedString', 'castedInt'))
   }).create();
 
-  item.get('price'); // 123.45
+  item.get('castedString'); // 33.33
+  item.get('castedInt');    // 1.0
+  item.get('castedCP');     // 34.33
   ```
 
   @method macros.asFloat
-  @param {String} dependentKey Dependent key which value will be casted to a float.
+  @param value The value to cast. It can be a number, a numeric string, a property key or another computed property.
   @return {Number} Returns casted float.
 */
-exports["default"] = parseComputedPropertyMacro (parseFloat);
+exports["default"] = parseComputedPropertyMacro(parseFloat);
 },{"../utils":25}],5:[function(_dereq_,module,exports){
 "use strict";
 var parseComputedPropertyMacro = _dereq_("../utils").parseComputedPropertyMacro;
@@ -491,7 +497,7 @@ if (!isBlank) {
 }
 
 var isPresent = function(value) {
-  return ! isBlank(value);
+  return !isBlank(value);
 };
 
 /**

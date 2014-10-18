@@ -18,7 +18,7 @@ define(
     }
 
     var isPresent = function(value) {
-      return ! isBlank(value);
+      return !isBlank(value);
     };
 
     /**

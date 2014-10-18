@@ -14,7 +14,7 @@ if (!isBlank) {
 }
 
 var isPresent = function(value) {
-  return ! isBlank(value);
+  return !isBlank(value);
 };
 
 /**

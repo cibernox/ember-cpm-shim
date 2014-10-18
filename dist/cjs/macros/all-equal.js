@@ -10,7 +10,9 @@ var getDependentPropertyKeys = require("../utils").getDependentPropertyKeys;
 
   ```javascript
   var Cuboid = Ember.Object.extend({
-    cube: allEqual('height', 'width', 'depth')
+    cube: allEqual('height', 'width', 'depth'),
+    base6: allEqual('width', 'depth', 6),
+    side12: allEqual(sum('width', 'depth'), 12),
   });
 
   var shape = Cuboid.create({
@@ -19,14 +21,15 @@ var getDependentPropertyKeys = require("../utils").getDependentPropertyKeys;
     depth: 6
   });
 
-  shape.get('cube'); // true
+  shape.get('cube');    // true
+  shape.get('base6');   // true
+  shape.get('side12');  // true
   shape.set('width', 4);
-  shape.get('cube'); // false
+  shape.get('cube');    // false
   ```
 
   @method macros.allEqual
-  @param *arguments Values or dependent keys that must be equal. It can be a values or the key of a
-                    property in the object of the computed property.
+  @param *arguments Elements that must be equal. It be regular value, a property key or another computed property.
   @return {Boolean} Returns true it all elements are equal
 */
 exports["default"] = function EmberCPM_allEqual() {

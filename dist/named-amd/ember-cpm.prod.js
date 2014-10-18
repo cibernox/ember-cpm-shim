@@ -1,5 +1,5 @@
 define("ember-cpm",
-  ["ember","./macros/among","./macros/all-equal","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/quotient","./macros/difference","./macros/asFloat","./macros/asInt","exports"],
+  ["ember","./macros/among","./macros/all-equal","./macros/encode-uri-component","./macros/encode-uri","./macros/first-present","./macros/fmt","./macros/html-escape","./macros/if-null","./macros/not-among","./macros/not-equal","./macros/not-match","./macros/promise","./macros/safe-string","./macros/join","./macros/sum-by","./macros/sum","./macros/concat","./macros/conditional","./macros/product","./macros/quotient","./macros/difference","./macros/as-float","./macros/as-int","exports"],
   function(__dependency1__, __dependency2__, __dependency3__, __dependency4__, __dependency5__, __dependency6__, __dependency7__, __dependency8__, __dependency9__, __dependency10__, __dependency11__, __dependency12__, __dependency13__, __dependency14__, __dependency15__, __dependency16__, __dependency17__, __dependency18__, __dependency19__, __dependency20__, __dependency21__, __dependency22__, __dependency23__, __dependency24__, __exports__) {
     "use strict";
     var Ember = __dependency1__["default"] || __dependency1__;
@@ -93,7 +93,9 @@ define("ember-cpm/macros/all-equal",
 
       ```javascript
       var Cuboid = Ember.Object.extend({
-        cube: allEqual('height', 'width', 'depth')
+        cube: allEqual('height', 'width', 'depth'),
+        base6: allEqual('width', 'depth', 6),
+        side12: allEqual(sum('width', 'depth'), 12),
       });
 
       var shape = Cuboid.create({
@@ -102,14 +104,15 @@ define("ember-cpm/macros/all-equal",
         depth: 6
       });
 
-      shape.get('cube'); // true
+      shape.get('cube');    // true
+      shape.get('base6');   // true
+      shape.get('side12');  // true
       shape.set('width', 4);
-      shape.get('cube'); // false
+      shape.get('cube');    // false
       ```
 
       @method macros.allEqual
-      @param *arguments Values or dependent keys that must be equal. It can be a values or the key of a
-                        property in the object of the computed property.
+      @param *arguments Elements that must be equal. It be regular value, a property key or another computed property.
       @return {Boolean} Returns true it all elements are equal
     */
     __exports__["default"] = function EmberCPM_allEqual() {
@@ -181,7 +184,7 @@ define("ember-cpm/macros/among",
       });
     }
   });
-define("ember-cpm/macros/asFloat",
+define("ember-cpm/macros/as-float",
   ["../utils","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -196,20 +199,23 @@ define("ember-cpm/macros/asFloat",
 
       ```javascript
       var item = Ember.Object.extend({
-        stringPrice: '123.45',
-        price: asFloat('stringPrice')
+        castedString: asFloat('33.33'),
+        castedInt: asFloat('1'),
+        castedCP: asFloat(sum('castedString', 'castedInt'))
       }).create();
 
-      item.get('price'); // 123.45
+      item.get('castedString'); // 33.33
+      item.get('castedInt');    // 1.0
+      item.get('castedCP');     // 34.33
       ```
 
       @method macros.asFloat
-      @param {String} dependentKey Dependent key which value will be casted to a float.
+      @param value The value to cast. It can be a number, a numeric string, a property key or another computed property.
       @return {Number} Returns casted float.
     */
-    __exports__["default"] = parseComputedPropertyMacro (parseFloat);
+    __exports__["default"] = parseComputedPropertyMacro(parseFloat);
   });
-define("ember-cpm/macros/asInt",
+define("ember-cpm/macros/as-int",
   ["../utils","exports"],
   function(__dependency1__, __exports__) {
     "use strict";
@@ -523,7 +529,7 @@ define("ember-cpm/macros/first-present",
     }
 
     var isPresent = function(value) {
-      return ! isBlank(value);
+      return !isBlank(value);
     };
 
     /**
