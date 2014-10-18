@@ -370,6 +370,24 @@ var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
 var getDependentPropertyKeys = _dereq_("../utils").getDependentPropertyKeys;
 
+/**
+  Returns the difference between the given elements
+
+  Example
+
+  ```javascript
+  var item = Ember.Object.extend({
+    benefit: difference('sellPrice', 'buyPrice')
+  }).create({sellPrice: 30, buyPrice: 22});
+
+  item.get('benefit'); // 8
+  ```
+
+  @method macros.difference
+  @param {Number|String|ComputedProperty} firstNumber First operand
+  @param {Number|String|ComputedProperty} lastNumber  Last operand
+  @return {Number} Difference between the operands.
+*/
 exports["default"] = function EmberCPM_difference() {
   var mainArguments = Array.prototype.slice.call(arguments);
   var propertyArguments = getDependentPropertyKeys(mainArguments);
@@ -394,6 +412,24 @@ var Ember = window.Ember["default"] || window.Ember;
 var get = Ember.get;
 var computed = Ember.computed;
 
+/**
+  Encodes the given value to make it URL safe
+
+  Example
+
+  ```javascript
+  var item = Ember.Object.extend({
+    url: 'http://example.com/one and two'
+    safeUrl: encodeURIComponent('url')
+  }).create();
+
+  item.get('safeUrl'); // 'http%3A%2F%2Fexample.com%2Fone%20and%20two'
+  ```
+
+  @method macros.encodeURIComponent
+  @param {String} dependentKey String with the dependent key which value will be encoded.
+  @return {String} A sanitized string
+*/
 exports["default"] = function EmberCPM_encodeURIComponent(dependentKey) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
