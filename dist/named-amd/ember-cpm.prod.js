@@ -817,14 +817,21 @@ define("ember-cpm/macros/not-among",
     var computed = Ember.computed;
 
     /**
-      Opposite or `EmberCPM.macros.among`
+      Opposite of `EmberCPM.macros.among`
 
       @method macros.notAmong
       @param {String} dependentKey Dependent key which value must not be among the given values.
       @param          *values      Values among which the dependentKey must not be included.
       @return {Boolean} Returns false the value in the given dependent key is among the privided values.
+
+      @deprecated - 10/18/2014
+      Rather than use notAmong, developers should use composed computed property macros
+
+      Example:
+        myProp: not(among('val', 'a', 'b', 'c'))
     */
     __exports__["default"] = function EmberCPM_notAmong(dependentKey) {
+      
       var properties = Array.prototype.slice.call(arguments, 1);
 
       return computed(dependentKey, function(){
@@ -856,8 +863,15 @@ define("ember-cpm/macros/not-equal",
       @param {String} dependentKey Dependent key which value must not be equal to the given value.
       @param {String} targetValue  Value to compare against.
       @return {Boolean} Returns true if the value in dependentKey is different to the targetValue
+
+      @deprecated - 10/18/2014
+      Rather than use notEqual, developers should use composed computed property macros
+
+      Example:
+        myProp: not(Ember.computed.equal('val', 'a'))
     */
     __exports__["default"] = function EmberCPM_notEqual(dependentKey, targetValue) {
+      
       return computed(dependentKey, function(){
         return get(this, dependentKey) !== targetValue;
       });
@@ -879,8 +893,15 @@ define("ember-cpm/macros/not-match",
       @param {String} dependentKey Dependent key which value must not be match to the given regexp.
       @param {String} regexp       Regular expression to compare with.
       @return {Boolean} Returns true if the value in dependentKey does not match the given regexp.
+
+      @deprecated - 10/18/2014
+      Rather than use notMatch, developers should use composed computed property macros
+
+      Example:
+        myProp: not(Ember.computed.match('email', /^.+@.+\\..+$/))
     */
     __exports__["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
+      
       return computed(dependentKey, function(){
         var value = get(this, dependentKey);
 
