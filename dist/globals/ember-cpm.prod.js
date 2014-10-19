@@ -775,18 +775,24 @@ exports["default"] = function EmberCPM_notMatch(dependentKey, regexp) {
 var reduceComputedPropertyMacro = _dereq_("../utils").reduceComputedPropertyMacro;
 
 /**
-*  Returns the product of some numeric properties and numeric constants
-*
-*  Example: 6 * 7 * 2 = 84
-*
-*  Usage:
-*    a: 6,
-*    b: 7,
-*    c: 2,
-*    d: product('a', 'b', 'c'), // 84
-*    e: product('a', 'b', 'c', 2) // 168
-*/
+  Returns an the multiplication of its arguments.
 
+  Example
+
+  ```javascript
+  var obj = Ember.Object.extend({
+    a: 6,
+    b: 7,
+    c: 2,
+    d: product('a', 'b', 'c'),      // 84
+    e: product('a', 'b', 'c', 2)    // 168
+  });
+  ```
+
+  @method macros.product
+  @param *arguments It can be numbers, property keys containing numbers or other computed properties.
+  @return {Number} The product of all its arguments.
+*/
 exports["default"] = reduceComputedPropertyMacro(
   function (prev, item) {
     return prev * item;
@@ -799,11 +805,27 @@ var Ember = window.Ember["default"] || window.Ember;
 var get = Ember.get;
 var computed = Ember.computed;
 
-// TODO: Use RSVP?
+/**
+  Returns a promise that resolved to the value in the given dependent key
+
+  Example
+
+  ```javascript
+    var obj = Ember.Object.extend({
+      asPromise: promise('value')
+    }).create({value: 'Kangaroo'});
+    obj.get('asPromise').then(function(x){ console.log(x); }) // Logs 'Kangaroo'
+  ```
+
+  @method macros.promise
+  @param {String} dependentKey The property key with the resolve value of the promise.
+  @return {Promise} A promise
+*/
 exports["default"] = function EmberCPM_promise(dependentKey) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) { return value; }
+    // TODO: Use RSVP?
     return Ember.$.when(value);
   });
 }
@@ -813,9 +835,29 @@ var Ember = window.Ember["default"] || window.Ember;
 var getVal = _dereq_("../utils").getVal;
 var getDependentPropertyKeys = _dereq_("../utils").getDependentPropertyKeys;
 
+/**
+  Returns an the float quotient of divide the first argument by the second one.
+
+  Example
+
+  ```javascript
+  var MyType = Ember.Object.extend({
+    a: 6,
+    b: 2,
+    c: 5,
+    d: quotient('a', 'b'),                    // 3
+    e: quotient('a', 3),                      // 2
+    f: quotient(Ember.computed.alias('c'), 2) // 2.5
+  });
+  ```
+
+  @method macros.quotient
+  @param dividend Can be a number, a property key containing a number or another computed property.
+  @return {Float} The quotient of the division.
+*/
 exports["default"] = function EmberCPM_quotient() {
-  var mainArguments = Array.prototype.slice.call(arguments), // all arguments
-    propertyArguments = getDependentPropertyKeys(mainArguments);
+  var mainArguments = Array.prototype.slice.call(arguments);
+  var propertyArguments = getDependentPropertyKeys(mainArguments);
 
   propertyArguments.push(function () {
     switch (mainArguments.length) {
