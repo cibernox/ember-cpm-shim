@@ -15,7 +15,7 @@
   "homepage": "https://github.com/cibernox/ember-cpm",
   "authors": [
     "Miguel Camba",
-    "James Alexander Rosen",
+    "James Alexander Rosen"
   ],
   "dependencies": {
     "handlebars": "~1.3.0",
