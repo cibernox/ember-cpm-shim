@@ -24,7 +24,6 @@ exports["default"] = function EmberCPM_promise(dependentKey) {
   return computed(dependentKey, function(){
     var value = get(this, dependentKey);
     if (value == null) { return value; }
-    // TODO: Use RSVP?
-    return Ember.$.when(value);
+    return Ember.RSVP.Promise.resolve(value);
   });
 }
